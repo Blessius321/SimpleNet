@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  fastapi-server:
+    build: .
+    container_name: fastapi_defect_inference
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./temps:/app/temps  # persist temp images outside container
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
